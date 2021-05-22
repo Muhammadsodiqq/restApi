@@ -15,6 +15,13 @@ async function postgres ()  {
     try {
         let db = {}
         db.users = await userModel(Sequelize,sequelize)
+        db.sessions = await userModel(Sequelize,sequelize)
+       await db.users.hasMany(db.sessions, {
+           forignKey:{
+               name:"user_id",
+               allowNull:false
+           }
+       })
         // await sequelize.sync({force:true})
         return  db
       } catch (error) {
